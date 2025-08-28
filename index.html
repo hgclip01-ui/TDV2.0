@@ -2,109 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Main Menu</title>
-  <link rel="icon" type="image/x-icon" href="./assets/images/gameobj/base.png">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="./css/reset.css">
-  <link rel="stylesheet" href="./css/main-menu.css">
-
-  <!-- Libs -->
-  <script src="./js/lib/jquery.min.js"></script>
-  <!-- <script src="http://localhost:3001/socket.io/socket.io.js"></script> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Tech Circuit Defense</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/main-menu.css">
 </head>
 <body>
-  <!-- Background -->
-  <div id="bg"></div>
-
-  <!-- Container (pilihan level) -->
-  <div class="container">
-    <div class="feature">
-      <img src="./assets/images/feature-1.png" class="image">
-      <div class="content">
-        <h3>LEVEL 1</h3>
-        <a href="index.html?level=1"><button>PLAY</button></a>
-      </div>
-    </div>
-
-    <div class="feature">
-      <img src="./assets/images/feature-2.jpg" class="image" style="left: -400px; height: 1500px; top: 0px">
-      <div class="content">
-        <h3>LEVEL 2</h3>
-        <a href="index.html?level=2"><button>PLAY</button></a>
-      </div>
-    </div>
-
-    <div class="feature">
-      <img src="./assets/images/feature-3.png" class="image" style="left: -950px; height: 1500px; top: -200px">
-      <div class="content">
-        <h3>LEVEL 3</h3>
-        <a href="index.html?level=3"><button>PLAY</button></a>
-      </div>
-    </div>
-
-    <div class="feature">
-      <img src="./assets/images/feature-4.png" class="image" style="left: -950px; height: 1800px; top: -400px">
-      <div class="content">
-        <h3>ENDLESS MODE</h3>
-        <a href="index.html?level=4"><button>PLAY</button></a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Logo -->
-  <div class="logoDiv">
-    <svg viewBox="0 0 600 300">
-      <symbol id="s-text">
-        <text text-anchor="middle" x="50%" y="50%" dy=".35em">PRiSM</text>
-      </symbol>
-      <use class="text" xlink:href="#s-text"></use>
-      <use class="text" xlink:href="#s-text"></use>
-      <use class="text" xlink:href="#s-text"></use>
-      <use class="text" xlink:href="#s-text"></use>
-      <use class="text" xlink:href="#s-text"></use>
-    </svg>
-  </div>
-
-  <!-- Menu Buttons -->
-  <div class="menu">
-    <div class="button" id="btnInfo">INFO</div>
-    <div class="button" id="btnFeedback">FEEDBACK</div>
-  </div>
-
-  <!-- Info Popup -->
-  <div class="popup" id="popupInfo">
-    <div class="popup-content">
-      <span class="popup-close" id="closeInfo">&times;</span>
-      <h2>About PRiSM</h2>
-      <p>
-        PRiSM adalah game tower defense berbasis web. 
-        Pilih level, tempatkan tower, dan lawan musuh sebanyak mungkin!
-      </p>
-    </div>
-  </div>
-
-  <!-- Feedback Popup -->
-  <div class="popup" id="popupFeedback">
-    <div class="popup-content">
-      <span class="popup-close" id="closeFeedback">&times;</span>
-      <h2>Feedback</h2>
-      <form>
-        <textarea placeholder="Tulis feedback kamu di sini..."></textarea>
-        <br>
-        <button type="submit">Kirim</button>
-      </form>
-    </div>
-  </div>
 
   <!-- Loader -->
-  <div id="loader">
-    <div class="spinner"></div>
-    <p>Loading...</p>
+  <div class="loaderContainer">
+    <h1>Loading...</h1>
+  </div>
+
+  <!-- Home / Main Menu -->
+  <div id="home-screen" class="screen active">
+    <h1 class="game-title">⚡ Tech Circuit Defense ⚡</h1>
+    <button id="start-game" class="menu-btn">Start Game</button>
+    <button id="info-button" class="menu-btn">Info</button>
+    <button id="feedback-button" class="menu-btn">Feedback</button>
+    <button id="musicButton" class="menu-btn">Play Music</button>
+    <button id="musicPause" class="menu-btn" style="display:none">Pause Music</button>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen hidden">
+    <canvas id="gameCanvas"></canvas>
+    <div class="hud">
+      <span id="waveCounter">Wave: 0/5</span>
+      <span id="coinCounter">Coins: 0</span>
+      <button id="quit-button" class="hud-btn">Quit</button>
+    </div>
+  </div>
+
+  <!-- End Game Screen -->
+  <div id="end-screen" class="screen hidden">
+    <h1 id="end-message">Game Over</h1>
+    <button id="retry-button" class="menu-btn">Retry</button>
+    <button id="home-button" class="menu-btn">Home</button>
+  </div>
+
+  <!-- Info Modal -->
+  <div class="info-container hidden">
+    <div class="info-bg"></div>
+    <div class="info-content">
+      <h2>About the Game</h2>
+      <p>
+        Selamat datang di <b>Tech Circuit Defense</b>!  
+        Pertahankan dompet digitalmu dari serangan virus yang datang melalui papan sirkuit teknologi.  
+        Tempatkan tower dengan strategi tepat agar wallet tetap aman.
+      </p>
+      <button class="info-close">Close</button>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div class="feedback-container hidden">
+    <div class="feedback-bg"></div>
+    <div class="feedback-content">
+      <h2>Feedback</h2>
+      <textarea class="feedback-input" placeholder="Tulis masukanmu di sini..."></textarea>
+      <button class="feedback-submit">Kirim</button>
+      <button class="feedback-close">Close</button>
+    </div>
   </div>
 
   <!-- Scripts -->
-  <script src="./js/main-menu.js"></script>
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/howler.min.js"></script>
+  <script src="js/lib/require.js"></script>
+
+  <script src="js/main-menu.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/responsiveCanvas.js"></script>
+
+  <!-- Data & Classes -->
+  <script src="assets/data/data.level2.js"></script>
+  <script src="js/classes/Levels.js"></script>
+  <script src="js/classes/Enemy.js"></script>
+  <script src="js/classes/Projectile.js"></script>
+  <script src="js/classes/Effects.js"></script>
+  <script src="js/classes/Sprite.js"></script>
+  <script src="js/classes/Tower.js"></script>
+  <script src="js/classes/placementTile.js"></script>
 </body>
 </html>
